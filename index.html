@@ -16,10 +16,10 @@ app.directive('firstDirective',function(){
 	return { 
 
 		restrict:'EAC',
-		link:function(elem,attrs,scope)
+		link:function(scope,elem,attrs)
 		{
 			console.log('Inside Directive',scope);
-			elem.innerHTML = 'Dynamic Html via elem attrib';
+			elem.html('Dynamic Html via elem attrib');
 		}
 
 	 };
