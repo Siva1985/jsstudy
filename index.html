@@ -17,7 +17,9 @@ app.directive('firstDirective',function(){
 
 		restrict:'EAC',
 		templateUrl : 'dirtempl.html',
-		
+		scope : {
+				stringval : "@"
+		},
 		link:function(scope,elem,attrs)
 		{
 			console.log('Inside Directive',scope);
@@ -53,7 +55,7 @@ app.controller('OneCtrl',function($scope,$http){
 
 <button ng-click="initFunction()">Click</button>
 
-<div first-directive>
+<div first-directive stringval='passing a string to directive '>
 </div>
 <first-directive></first-directive>
 <div class="first-directive">
