@@ -19,7 +19,8 @@ app.directive('firstDirective',function(){
 		templateUrl : 'dirtempl.html',
 		scope : {
 				stringval : "@",
-				objectval : "="
+				objectval : "=",
+				functionval : "&"
 		},
 		link:function(scope,elem,attrs)
 		{
@@ -56,7 +57,7 @@ app.controller('OneCtrl',function($scope,$http){
 
 <button ng-click="initFunction()">Click</button>
 
-<div first-directive stringval='passing a string to directive ' objectval='{data:"example object"}'>
+<div first-directive stringval='passing a string to directive ' objectval='{data:"example object"}' functionval='initFunction()'>
 </div>
 <first-directive></first-directive>
 <div class="first-directive">
