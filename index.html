@@ -26,9 +26,8 @@ app.factory('httpRequestInterceptor', function () {
 app.factory('httpResponseInterceptor', function () {
   return {
     response: function (response) {
-	 response.data='Hi da'; 
-     console.log('Response is ',response.data)
-
+	 response.data={data:'Hi da'}; 
+	 return response;
     }
   };
 });
@@ -63,7 +62,11 @@ app.controller('OneCtrl',function($scope,OneFactory,$http){
 
 
 		//console.log('Init Function' + OneFactory)
-		$http.get('http://localhost/angular_practice/index.html');
+		$http.get('http://localhost/angular_practice/server.php').then(function(response){
+
+
+			console.log(response.data,'inside promise')
+		});
 	}
 
 
