@@ -11,14 +11,34 @@
 	
 var app = angular.module('directiveapp',[]);
 
+
+app.directive('reqDirective',function(){
+
+	return { 
+
+		priority : 100,
+		controller : 'TwoCtrl',
+		
+		link:function(scope,elem,attrs)
+		{
+			console.log('Inside Req Directive',scope);
+			//elem.html('Dynamic Html via elem attrib');
+		}
+
+	 };
+
+})
+
 app.directive('firstDirective',function(){
 
 	return { 
 
 		restrict:'EAC',
+		priority:1000,
 		templateUrl : 'dirtempl.html',
 		transclude : true,
 		controller : 'OneCtrl',
+		require : 'reqDirective',
 		scope : {
 				stringval : "@",
 				objectval : "=",
@@ -53,18 +73,37 @@ app.controller('OneCtrl',function($scope,$http){
 })
 
 
+app.controller('TwoCtrl',function($scope,$http){
+
+
+	$scope.myname = 'TwoCtrl';
+
+	$scope.initTwoFunction = function(){
+
+
+		$http.get('http://localhost/angular_practice/server.php').then(function(response){
+
+
+			console.log(response.data,'inside promise init two')
+		});
+	}
+
+
+})
+
 
 </script>
 
 
 <button ng-click="initFunction()">Click</button>
 
-<div first-directive stringval='passing a string to directive ' objectval='{data:"example object"}' functionval='initFunction()'>
+<div req-directive first-directive stringval='passing a string to directive ' objectval='{data:"example object"}' functionval='initFunction()'>
 <h3>Transclude Property Test</h3>
 </div>
-<first-directive></first-directive>
+<!-- <first-directive></first-directive>
 <div class="first-directive">
-</div>
+</div> -->
+
 </body>
 </html>
 
