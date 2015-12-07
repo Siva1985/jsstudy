@@ -1,0 +1,40 @@
+<html ng-app="providerapp">
+<head>
+<title>Provider Practice</title>
+<script type="text/javascript" src="Scripts/angular.js"></script>
+</head>
+<body ng-controller="OneCtrl">
+
+
+
+<script type="text/javascript">
+	
+var app = angular.module('providerapp',[]);
+
+
+
+app.factory('OneFactory',function(){
+
+
+	return ' From Factory';
+
+})
+
+app.controller('OneCtrl',function($scope,OneFactory){
+
+	$scope.initFunction = function(){
+
+
+		console.log('Init Function' + OneFactory)
+	}
+})
+
+
+
+</script>
+
+
+<button ng-click="initFunction()">Click</button>
+</body>
+</html>
+
