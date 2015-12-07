@@ -16,7 +16,7 @@ app.directive('firstDirective',function(){
 	return { 
 
 		restrict:'EAC',
-		template : 'This is from template object ',
+		templateUrl : 'dirtempl.html',
 		link:function(scope,elem,attrs)
 		{
 			console.log('Inside Directive',scope);
