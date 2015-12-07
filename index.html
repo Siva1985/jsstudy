@@ -12,6 +12,43 @@
 var app = angular.module('providerapp',[]);
 
 
+app.factory('httpRequestInterceptor', function () {
+  return {
+    request: function (config) {
+      var token = '?hello=hello';
+      config.url = config.url+token;
+      return config;
+      
+    }
+  };
+});
+
+app.factory('httpResponseInterceptor', function () {
+  return {
+    response: function (response) {
+	 response.data='Hi da'; 
+     console.log('Response is ',response.data)
+
+    }
+  };
+});
+
+app.config(function($httpProvider){
+$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+$httpProvider.defaults.headers.common['my_ip_Address'] = '192.168.0.111';
+$httpProvider.defaults.headers.post = {};
+$httpProvider.interceptors.push('httpRequestInterceptor');
+$httpProvider.interceptors.push('httpResponseInterceptor');
+console.log($httpProvider)
+
+})
+
+
+app.run(function(){
+
+
+	console.log('Module is Running')
+})
 
 app.factory('OneFactory',function(){
 
@@ -20,13 +57,16 @@ app.factory('OneFactory',function(){
 
 })
 
-app.controller('OneCtrl',function($scope,OneFactory){
+app.controller('OneCtrl',function($scope,OneFactory,$http){
 
 	$scope.initFunction = function(){
 
 
-		console.log('Init Function' + OneFactory)
+		//console.log('Init Function' + OneFactory)
+		$http.get('http://localhost/angular_practice/index.html');
 	}
+
+
 })
 
 
