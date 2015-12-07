@@ -1,6 +1,6 @@
-<html ng-app="providerapp">
+<html ng-app="directiveapp">
 <head>
-<title>Provider Practice</title>
+<title>Directive Practice</title>
 <script type="text/javascript" src="Scripts/angular.js"></script>
 </head>
 <body ng-controller="OneCtrl">
@@ -9,59 +9,27 @@
 
 <script type="text/javascript">
 	
-var app = angular.module('providerapp',[]);
+var app = angular.module('directiveapp',[]);
 
+app.directive('firstdirective',function(){
 
-app.factory('httpRequestInterceptor', function () {
-  return {
-    request: function (config) {
-      var token = '?hello=hello';
-      config.url = config.url+token;
-      return config;
-      
-    }
-  };
-});
+	return { 
 
-app.factory('httpResponseInterceptor', function () {
-  return {
-    response: function (response) {
-	 response.data={data:'Hi da'}; 
-	 return response;
-    }
-  };
-});
+		restrict:'EAC',
+		link:function(elem,attrs,scope)
+		{
+			console.log('Inside Directive')
+		}
 
-app.config(function($httpProvider){
-$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-$httpProvider.defaults.headers.common['my_ip_Address'] = '192.168.0.111';
-$httpProvider.defaults.headers.post = {};
-$httpProvider.interceptors.push('httpRequestInterceptor');
-$httpProvider.interceptors.push('httpResponseInterceptor');
-console.log($httpProvider)
+	 };
 
 })
 
-
-app.run(function(){
-
-
-	console.log('Module is Running')
-})
-
-app.factory('OneFactory',function(){
-
-
-	return ' From Factory';
-
-})
-
-app.controller('OneCtrl',function($scope,OneFactory,$http){
+app.controller('OneCtrl',function($scope){
 
 	$scope.initFunction = function(){
 
 
-		//console.log('Init Function' + OneFactory)
 		$http.get('http://localhost/angular_practice/server.php').then(function(response){
 
 
@@ -78,6 +46,9 @@ app.controller('OneCtrl',function($scope,OneFactory,$http){
 
 
 <button ng-click="initFunction()">Click</button>
+
+<div firstdirective>
+</div>
 </body>
 </html>
 
