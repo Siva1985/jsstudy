@@ -17,6 +17,7 @@ app.directive('firstDirective',function(){
 
 		restrict:'EAC',
 		templateUrl : 'dirtempl.html',
+		transclude : true,
 		scope : {
 				stringval : "@",
 				objectval : "=",
@@ -58,6 +59,7 @@ app.controller('OneCtrl',function($scope,$http){
 <button ng-click="initFunction()">Click</button>
 
 <div first-directive stringval='passing a string to directive ' objectval='{data:"example object"}' functionval='initFunction()'>
+<h3>Transclude Property Test</h3>
 </div>
 <first-directive></first-directive>
 <div class="first-directive">
