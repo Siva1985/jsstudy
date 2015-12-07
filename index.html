@@ -11,21 +11,22 @@
 	
 var app = angular.module('directiveapp',[]);
 
-app.directive('firstdirective',function(){
+app.directive('firstDirective',function(){
 
 	return { 
 
 		restrict:'EAC',
 		link:function(elem,attrs,scope)
 		{
-			console.log('Inside Directive')
+			console.log('Inside Directive',scope);
+			elem.innerHTML = 'Dynamic Html via elem attrib';
 		}
 
 	 };
 
 })
 
-app.controller('OneCtrl',function($scope){
+app.controller('OneCtrl',function($scope,$http){
 
 	$scope.initFunction = function(){
 
@@ -47,7 +48,7 @@ app.controller('OneCtrl',function($scope){
 
 <button ng-click="initFunction()">Click</button>
 
-<div firstdirective>
+<div first-directive>
 </div>
 </body>
 </html>
