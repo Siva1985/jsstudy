@@ -18,6 +18,7 @@ app.directive('firstDirective',function(){
 		restrict:'EAC',
 		templateUrl : 'dirtempl.html',
 		transclude : true,
+		controller : 'OneCtrl',
 		scope : {
 				stringval : "@",
 				objectval : "=",
