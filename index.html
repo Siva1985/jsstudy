@@ -1,45 +1,37 @@
-<html ng-app="providerapp">
+<html ng-app="routeproviderapp">
 <head>
-<title>Provider Practice</title>
+<title>Route Provider Practice</title>
 <script type="text/javascript" src="Scripts/angular.js"></script>
+<script type="text/javascript" src="Scripts/angular-route.js"></script>
 </head>
-<body ng-controller="OneCtrl">
+<body ng-controller="CCtrl">
 
 
 
 <script type="text/javascript">
 	
-var app = angular.module('providerapp',[]);
+var app = angular.module('routeproviderapp',['ngRoute']);
 
 
-app.factory('httpRequestInterceptor', function () {
-  return {
-    request: function (config) {
-      var token = '?hello=hello';
-      config.url = config.url+token;
-      return config;
-      
-    }
-  };
-});
 
-app.factory('httpResponseInterceptor', function () {
-  return {
-    response: function (response) {
-	 response.data={data:'Hi da'}; 
-	 return response;
-    }
-  };
-});
 
-app.config(function($httpProvider){
-$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-$httpProvider.defaults.headers.common['my_ip_Address'] = '192.168.0.111';
-$httpProvider.defaults.headers.post = {};
-$httpProvider.interceptors.push('httpRequestInterceptor');
-$httpProvider.interceptors.push('httpResponseInterceptor');
-console.log($httpProvider)
+app.config(function($routeProvider){
 
+	$routeProvider.when('/a',{
+
+		templateUrl : 'a.html',
+		controllerUrl  : 'ACtrl'
+	})
+	.when('/b',{
+
+		templateUrl : 'b.html',
+		controllerUrl  : 'BCtrl'
+	})
+	.otherwise({
+
+		templateUrl : 'default.html',
+		controllerUrl  : 'DefaultCtrl'
+	})
 })
 
 
@@ -49,25 +41,32 @@ app.run(function(){
 	console.log('Module is Running')
 })
 
-app.factory('OneFactory',function(){
 
 
-	return ' From Factory';
+app.controller('ACtrl',function($scope,$http){
+
+	$scope.myname = "ACtrl";
+
 
 })
 
-app.controller('OneCtrl',function($scope,OneFactory,$http){
 
-	$scope.initFunction = function(){
-
-
-		//console.log('Init Function' + OneFactory)
-		$http.get('http://localhost/angular_practice/server.php').then(function(response){
+app.controller('CCtrl',function($scope,$http){
 
 
-			console.log(response.data,'inside promise')
-		});
-	}
+
+})
+
+app.controller('DefaultCtrl',function($scope,$http){
+
+
+
+})
+
+app.controller('BCtrl',function($scope,$http){
+
+	$scope.myname = "BCtrl";
+
 
 
 })
@@ -78,6 +77,10 @@ app.controller('OneCtrl',function($scope,OneFactory,$http){
 
 
 <button ng-click="initFunction()">Click</button>
+<a href="#/a">Click A</a>
+<a href="#/b">Click B</a>
+<div ng-view>
+</div>
 </body>
 </html>
 
