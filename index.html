@@ -1,4 +1,4 @@
-<html ng-app="logproviderapp">
+<html ng-app="filterproviderapp">
 <head>
 <title>Log Provider Practice</title>
 <script type="text/javascript" src="Scripts/angular.js"></script>
@@ -9,28 +9,29 @@
 
 <script type="text/javascript">
 	
-var app = angular.module('logproviderapp',[]);
+var app = angular.module('filterproviderapp',[]);
 
+app.config(function($filterProvider){
 
-app.config(function($logProvider){
+$filterProvider.register('myFilter',function(){
 
-$logProvider.debugEnabled(false);
+	return function(text)
+	{
+		return text
+	}
+});
+
 
 })
 
 app.controller('OneCtrl',function($scope,$http,$log){
 
 
-	$scope.myname = 'OneCtrl';
+	$scope.names = ['one','two','three','four','five'];
 
 	$scope.initFunction = function(){
 
 
-		$log.debug('This is debug',$scope.myname)
-		$log.error('This is Error')
-		$log.info('This is info')
-		$log.warn('This is warn')
-		$log.log('This is log')
 
 	}
 
@@ -43,7 +44,9 @@ app.controller('OneCtrl',function($scope,$http,$log){
 
 </script>
 
-
+<ul>
+<li ng-repeat="name in names | myFilter track by $index">{{name}}</li>
+</ul>
 </body>
 </html>
 
