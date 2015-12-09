@@ -13,19 +13,32 @@
 var app = angular.module('routeproviderapp',['ngRoute']);
 
 
-
-
 app.config(function($routeProvider){
 
-	$routeProvider.when('/a',{
+	$routeProvider
+	.when('/:section/:id',{
 
-		templateUrl : 'a.html',
-		controllerUrl  : 'ACtrl'
+		templateUrl : function(routepro){
+			console.log(routepro)
+			return routepro.section+'.html'
+		},
+		controllerUrl  : function(routepro){
+			return routepro.section.toUpperCase()+'Ctrl'
+		}
+	 
+
 	})
-	.when('/b',{
+	.when('/:section/:id',{
 
-		templateUrl : 'b.html',
-		controllerUrl  : 'BCtrl'
+		templateUrl : function(routepro){
+			console.log(routepro,'three parameters')
+			return routepro.section+'.html'
+		},
+		controllerUrl  : function(routepro){
+			return routepro.section.toUpperCase()+'Ctrl'
+		}
+	 
+
 	})
 	.otherwise({
 
@@ -65,7 +78,7 @@ app.controller('DefaultCtrl',function($scope,$http){
 
 app.controller('BCtrl',function($scope,$http){
 
-	$scope.myname = "BCtrl";
+	$scope.myname = "BCtrl from Variable";
 
 
 
