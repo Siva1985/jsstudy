@@ -1,4 +1,4 @@
-<html ng-app="filterproviderapp">
+<html ng-app="filterapp">
 <head>
 <title>Log Provider Practice</title>
 <script type="text/javascript" src="Scripts/angular.js"></script>
@@ -9,22 +9,24 @@
 
 <script type="text/javascript">
 	
-var app = angular.module('filterproviderapp',[]);
+var app = angular.module('filterapp',[]);
 
-app.config(function($filterProvider){
+app.filter('FirstCaps',function(){
 
-$filterProvider.register('myFilter',function(){
-
-	return function(text)
+	return function(input)
 	{
-		return text
+		var output = [];
+		angular.forEach(input,function(val){
+
+			output.push(val.toUpperCase())
+
+		})
+		return output;
 	}
-});
-
-
 })
 
-app.controller('OneCtrl',function($scope,$http,$log){
+
+app.controller('OneCtrl',function($scope,$http){
 
 
 	$scope.names = ['one','two','three','four','five'];
@@ -45,7 +47,7 @@ app.controller('OneCtrl',function($scope,$http,$log){
 </script>
 
 <ul>
-<li ng-repeat="name in names | myFilter track by $index">{{name}}</li>
+<li ng-repeat="name in names | FirstCaps track by $index">{{name}}</li>
 </ul>
 </body>
 </html>
