@@ -11,6 +11,16 @@
 	
 var app = angular.module('filterapp',[]);
 
+app.filter('SingleWord',function(){
+
+
+	return function(input)
+	{
+		
+		return input.toUpperCase();
+	}
+})
+
 app.filter('FirstCaps',function(){
 
 
@@ -29,6 +39,24 @@ app.filter('FirstCaps',function(){
 	}
 })
 
+app.filter('ByKey',function(){
+
+
+	return function(input,keyval,valval)
+	{
+		var output = [];
+		angular.forEach(input,function(val){
+
+			 if(val[keyval]==valval)
+			 output.push(val)
+			 
+
+
+		})
+		return output;
+	}
+})
+
 console.log(app,'app')
 
 app.controller('OneCtrl',function($scope,$http){
@@ -36,7 +64,15 @@ app.controller('OneCtrl',function($scope,$http){
 
 	$scope.names = ['one','two','three','four','five'];
 
+	$scope.datas = [{designation:"MEAN Dev",name:"Akhil"},{designation:"JAVA Dev",name:"Ram"},{designation:"MEAN Dev",name:"Rakhi"},{designation:"MEAN Dev",name:"Akhil R"},{designation:"PHP Dev",name:"Saranya"},{designation:"PHP Dev",name:"Rejani"},{designation:"C++ Dev",name:"Bharathi"}];
+
 	$scope.filterby = 'one';
+
+	$scope.devname = "Bharathi";
+
+
+	$scope.keyval = 'designation';
+	$scope.valval = 'MEAN Dev';
 
 	$scope.initFunction = function(){
 
@@ -54,7 +90,24 @@ app.controller('OneCtrl',function($scope,$http){
 </script>
 <input type="text" ng-model="filterby">
 <ul>
-<li ng-repeat="name in names | FirstCaps:filterby track by $index">{{name}}</li>
+<li ng-repeat="name in names | FirstCaps:filterby">{{name}}</li>
+</ul>
+{{ devname | SingleWord }}
+<br>
+<select ng-model="keyval">
+	<option value="designation">Designation</option>
+</select>
+
+<select ng-model="valval">
+	<option value="MEAN Dev">MEAN Dev</option>
+	<option value="JAVA Dev">JAVA Dev</option>
+	<option value="PHP Dev">PHP Dev</option>
+	<option value="C++ Dev">C++ Dev</option>
+
+</select>
+
+<ul>
+<li ng-repeat="data in datas | ByKey:keyval:valval ">{{data}}</li>
 </ul>
 </body>
 </html>
