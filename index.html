@@ -13,23 +13,30 @@ var app = angular.module('filterapp',[]);
 
 app.filter('FirstCaps',function(){
 
-	return function(input)
+
+	return function(input,filterby)
 	{
 		var output = [];
 		angular.forEach(input,function(val){
 
+			if(val==filterby)
 			output.push(val.toUpperCase())
+			else
+				output.push(val)
 
 		})
 		return output;
 	}
 })
 
+console.log(app,'app')
 
 app.controller('OneCtrl',function($scope,$http){
 
 
 	$scope.names = ['one','two','three','four','five'];
+
+	$scope.filterby = 'one';
 
 	$scope.initFunction = function(){
 
@@ -45,9 +52,9 @@ app.controller('OneCtrl',function($scope,$http){
 
 
 </script>
-
+<input type="text" ng-model="filterby">
 <ul>
-<li ng-repeat="name in names | FirstCaps track by $index">{{name}}</li>
+<li ng-repeat="name in names | FirstCaps:filterby track by $index">{{name}}</li>
 </ul>
 </body>
 </html>
